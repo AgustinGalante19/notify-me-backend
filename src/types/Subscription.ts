@@ -4,5 +4,5 @@ export default interface Subscription {
 	icon: string;
 	amount: number;
 	wallet_target: string;
-	charge_date: string;
+	charge_day: string;
 }
