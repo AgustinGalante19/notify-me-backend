@@ -1,5 +1,5 @@
 import { type QueryResult, sql } from "@vercel/postgres";
-import type Subscription from "../types/Subscription";
+import type Subscription from "@/types/Subscription";
 
 //!Si es personal && cae domingo NO se cobra tener en cuenta.
 //TODO: checkear si pasa con todas o solo con personal al ser netamente en pesos

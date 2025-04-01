@@ -1,8 +1,8 @@
 import { CronJob } from "cron";
 import { Expo, type ExpoPushMessage } from "expo-server-sdk";
-import type Subscription from "../types/Subscription";
+import type Subscription from "@/types/Subscription";
 import { getSubscriptions } from "./subscriptions";
-import getTomorrowDay from "../utils/getTomorrowDay";
+import getTomorrowDay from "@/utils/getTomorrowDay";
 
 const USER_EXPO_PUSH_TOKEN = process.env.USER_EXPO_PUSH_TOKEN ?? "";
 

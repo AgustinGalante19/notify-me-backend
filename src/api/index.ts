@@ -1,6 +1,7 @@
 import express, { type Application } from "express";
 import cors from "cors";
 import morgan from "morgan";
+import subscriptionsRouter from "./routes/subscriptions-routes";
 
 const PORT = process.env.PORT ?? 5000;
 
@@ -24,6 +25,8 @@ class NotifyMeApi {
 		this.app.get("/", (_, res) => {
 			res.send("hi");
 		});
+
+		this.app.use("/subscriptions", subscriptionsRouter);
 	}
 
 	start() {
