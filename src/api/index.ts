@@ -2,6 +2,7 @@ import express, { type Application } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import subscriptionsRouter from "./routes/subscriptions-routes";
+import path from "node:path";
 
 const PORT = process.env.PORT ?? 5000;
 
@@ -10,6 +11,7 @@ class NotifyMeApi {
 
 	constructor() {
 		this.app = express();
+
 		this.routes();
 		this.config();
 	}
@@ -19,6 +21,10 @@ class NotifyMeApi {
 		this.app.use(morgan("dev"));
 		this.app.use(express.urlencoded({ extended: true }));
 		this.app.use(express.json());
+		this.app.use(
+			"/static",
+			express.static(path.join(process.cwd(), "/src", "/api", "public")),
+		);
 	}
 
 	private routes() {
@@ -31,6 +37,7 @@ class NotifyMeApi {
 
 	start() {
 		this.app.listen(PORT, () => {
+			console.log(path.join(process.cwd(), "/src", "/api", "public"));
 			console.log(`Server running: http://localhost:${PORT}`);
 		});
 	}
