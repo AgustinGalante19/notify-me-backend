@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "dotenvx run -f .env.local -- tsx watch ./src/server.ts",
+    "start": "tsx ./src/server.ts",
     "sample": "node ./scripts/expo_example.js"
   },
   "keywords": [],
