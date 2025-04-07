@@ -1,5 +1,5 @@
 import { Expo, type ExpoPushMessage } from "expo-server-sdk";
-import type Subscription from "@/types/Subscription";
+import type Subscription from "../types/Subscription";
 
 const USER_EXPO_PUSH_TOKEN = process.env.USER_EXPO_PUSH_TOKEN ?? "";
 

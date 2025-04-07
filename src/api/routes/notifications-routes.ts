@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getSubscriptions } from "@/services/subscriptions";
-import { sendNotifications } from "@/services/notificacions";
-import getTomorrowDay from "@/utils/getTomorrowDay";
+import { getSubscriptions } from "../../services/subscriptions";
+import getTomorrowDay from "../../utils/getTomorrowDay";
+import { sendNotifications } from "../../services/notificacions";
 
 class NotificationsRoutes {
 	public router: Router;

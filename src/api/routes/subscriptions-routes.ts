@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getSubscriptions } from "@/services/subscriptions";
+import { getSubscriptions } from "../../services/subscriptions";
 
 class SubscriptionsRoutes {
 	public router: Router;
