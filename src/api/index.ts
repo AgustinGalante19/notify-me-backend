@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import subscriptionsRouter from "./routes/subscriptions-routes";
 import path from "node:path";
+import notificationsRouter from "./routes/notifications-routes";
 
 const PORT = process.env.PORT ?? 5000;
 
@@ -33,6 +34,7 @@ class NotifyMeApi {
 		});
 
 		this.app.use("/subscriptions", subscriptionsRouter);
+		this.app.use("/notifications", notificationsRouter);
 	}
 
 	start() {
