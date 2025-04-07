@@ -17,7 +17,7 @@ class NotificationsRoutes {
 			if (subscriptions.length > 0) {
 				await sendNotifications(subscriptions);
 			}
-			res.send({ status: 200, totalSubs: 0 });
+			res.send({ status: 200, totalSubs: subscriptions.length });
 		});
 	}
 }
