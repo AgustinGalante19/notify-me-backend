@@ -13,14 +13,13 @@ class NotifyMeApi {
 	constructor() {
 		this.app = express();
 
-		this.routes();
 		this.config();
+		this.routes();
 	}
 
 	private config() {
 		this.app.use(cors());
 		this.app.use(morgan("dev"));
-		this.app.use(express.urlencoded({ extended: true }));
 		this.app.use(express.json());
 		this.app.use(
 			"/static",
