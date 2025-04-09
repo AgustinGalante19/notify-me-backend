@@ -1,8 +1,11 @@
 import { Router } from "express";
 import { getSubscriptions } from "../../services/subscriptions";
 import getTomorrowDay from "../../utils/getTomorrowDay";
-import { sendNotifications } from "../../services/notificacions";
-
+import {
+	sendNotifications,
+	sendNotificationsFirebase,
+} from "../../services/notificacions";
+import { saveToken } from "../../services/user-token";
 class NotificationsRoutes {
 	public router: Router;
 
@@ -18,6 +21,28 @@ class NotificationsRoutes {
 				await sendNotifications(subscriptions);
 			}
 			res.send({ status: 200, totalSubs: subscriptions.length });
+		});
+
+		this.router.get("/firebase", async (_, res) => {
+			try {
+				await sendNotificationsFirebase();
+				res.send({ status: 200, totalSubs: 0 });
+			} catch (err) {
+				console.log(err);
+				res.status(500).send("error");
+			}
+		});
+
+		this.router.post("/check-token", async (req, res) => {
+			const { fcmToken } = req.body;
+			if (!fcmToken) {
+				res.status(400).json({ status: 400, message: "fcmToken is required" });
+				return;
+			}
+
+			const { status, message } = await saveToken(fcmToken);
+
+			res.status(status).json({ status, message });
 		});
 	}
 }

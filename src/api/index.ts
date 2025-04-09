@@ -4,9 +4,9 @@ import morgan from "morgan";
 import subscriptionsRouter from "./routes/subscriptions-routes";
 import path from "node:path";
 import notificationsRouter from "./routes/notifications-routes";
+import { applicationDefault, initializeApp } from "firebase-admin/app";
 
 const PORT = process.env.PORT ?? 5000;
-
 class NotifyMeApi {
 	private app: Application;
 
@@ -25,6 +25,11 @@ class NotifyMeApi {
 			"/static",
 			express.static(path.join(process.cwd(), "/src", "/api", "public")),
 		);
+
+		initializeApp({
+			credential: applicationDefault(),
+			projectId: "notify-me-app-b4bc3",
+		});
 	}
 
 	private routes() {
