@@ -1,17 +1,9 @@
-import fs from "node:fs";
-import path from "node:path";
 import type Response from "../types/Response";
-
-const dataFolderPath = path.join(process.cwd(), "data");
-const dataFilePath = path.join(dataFolderPath, "user.json");
+import { sql } from "@vercel/postgres";
 
 export async function saveToken(token: string): Promise<Response> {
-	if (!fs.existsSync(dataFolderPath)) fs.mkdirSync(dataFolderPath);
-
-	if (!fs.existsSync(dataFilePath)) fs.writeFileSync(dataFilePath, "{}");
-
 	try {
-		fs.writeFileSync(dataFilePath, JSON.stringify({ fcmToken: token }));
+		await sql`update notifyme_user set token = ${token} where id = 1`;
 		return { status: 200, message: "Token writen successfully" };
 	} catch (err) {
 		console.log("Error writing token", err);
@@ -21,9 +13,8 @@ export async function saveToken(token: string): Promise<Response> {
 
 export async function getToken(): Promise<Response> {
 	try {
-		const file = fs.readFileSync(dataFilePath);
-
-		const { fcmToken } = JSON.parse(file.toString());
+		const { rows } = await sql`select token from notifyme_user`;
+		const fcmToken = rows[0].token;
 
 		return { status: 200, message: fcmToken };
 	} catch (err) {
