@@ -2,6 +2,8 @@
 /dist
 /.vscode
 
+/data
+
 .env.*
 
 notify-me-app-b4bc3-firebase-adminsdk-fbsvc-ec6757d211.json
