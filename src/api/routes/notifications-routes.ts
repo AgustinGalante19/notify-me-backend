@@ -5,7 +5,8 @@ import {
 	sendNotifications,
 	sendNotificationsFirebase,
 } from "../../services/notificacions";
-import { saveToken } from "../../services/user-token";
+import { getToken, saveToken } from "../../services/user-token";
+
 class NotificationsRoutes {
 	public router: Router;
 
@@ -25,8 +26,12 @@ class NotificationsRoutes {
 
 		this.router.get("/firebase", async (_, res) => {
 			try {
-				await sendNotificationsFirebase();
-				res.send({ status: 200, totalSubs: 0 });
+				const { message: fcmToken } = await getToken();
+				const subscriptions = await getSubscriptions({ day: getTomorrowDay() });
+				if (subscriptions.length > 0) {
+					await sendNotificationsFirebase(fcmToken);
+				}
+				res.send({ status: 200, message: subscriptions.length });
 			} catch (err) {
 				console.log(err);
 				res.status(500).send("error");
@@ -41,6 +46,12 @@ class NotificationsRoutes {
 			}
 
 			const { status, message } = await saveToken(fcmToken);
+
+			res.status(status).json({ status, message });
+		});
+
+		this.router.get("/get-token", async (_, res) => {
+			const { status, message } = await getToken();
 
 			res.status(status).json({ status, message });
 		});
