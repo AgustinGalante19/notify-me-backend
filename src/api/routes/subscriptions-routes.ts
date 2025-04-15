@@ -21,7 +21,16 @@ class SubscriptionsRoutes {
 		});
 
 		this.router.post("/", async (req, res) => {
-			const { name, amount, icon, id, charge_day, wallet_target } = req.body;
+			const {
+				name,
+				amount,
+				icon,
+				id,
+				charge_day,
+				wallet_target,
+				currency,
+				domain,
+			} = req.body;
 			const response = await addSubscription({
 				amount,
 				charge_day,
@@ -29,12 +38,22 @@ class SubscriptionsRoutes {
 				id,
 				name,
 				wallet_target,
+				currency,
+				domain,
 			});
 			res.json(response);
 		});
 
 		this.router.put("/:id", async (req, res) => {
-			const { name, amount, icon, charge_day, wallet_target } = req.body;
+			const {
+				name,
+				amount,
+				icon,
+				charge_day,
+				wallet_target,
+				currency,
+				domain,
+			} = req.body;
 			const response = await editSubscription({
 				amount,
 				charge_day,
@@ -42,6 +61,8 @@ class SubscriptionsRoutes {
 				id: Number(req.params.id),
 				name,
 				wallet_target,
+				currency,
+				domain,
 			});
 			res.json(response);
 		});

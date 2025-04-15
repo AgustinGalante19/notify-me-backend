@@ -21,13 +21,24 @@ export async function getSubscriptions({
 	}
 
 	const result: Subscription[] = queryResult.rows.map(
-		({ amount, charge_day, icon, id, name, wallet_target }) => ({
+		({
 			amount,
 			charge_day,
 			icon,
 			id,
 			name,
 			wallet_target,
+			currency,
+			domain,
+		}) => ({
+			amount,
+			charge_day,
+			icon,
+			id,
+			name,
+			wallet_target,
+			currency,
+			domain,
 		}),
 	);
 
@@ -35,23 +46,34 @@ export async function getSubscriptions({
 }
 
 export async function addSubscription(newSubscription: Subscription) {
-	const { wallet_target, amount, charge_day, icon, name } = newSubscription;
+	const { wallet_target, amount, charge_day, icon, name, currency, domain } =
+		newSubscription;
 
 	const request =
-		await sql`insert into notifyme_subscriptions (name, amount, icon, charge_day, wallet_target) values (${name}, ${amount}, ${icon}, ${charge_day}, ${wallet_target})`;
+		await sql`insert into notifyme_subscriptions (name, amount, icon, charge_day, wallet_target) values (${name}, ${amount}, ${icon}, ${charge_day}, ${wallet_target}, ${currency}, ${domain})`;
 	return { status: 200, rows: request.rowCount };
 }
 
 export async function editSubscription(updatedSubscription: Subscription) {
-	const { id, wallet_target, amount, charge_day, icon, name } =
-		updatedSubscription;
+	const {
+		id,
+		wallet_target,
+		amount,
+		charge_day,
+		icon,
+		name,
+		currency,
+		domain,
+	} = updatedSubscription;
 
 	const request = await sql`update notifyme_subscriptions set 
 		name = ${name},
 		amount = ${amount},
 		icon  =  ${icon},
 		charge_day =${charge_day},
-		wallet_target = ${wallet_target}
+		wallet_target = ${wallet_target},
+		currency = ${currency},
+		domain = ${domain}
 		where id = ${id}`;
 
 	return { status: 200, rows: request.rowCount };
